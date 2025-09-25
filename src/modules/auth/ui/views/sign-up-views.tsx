@@ -23,30 +23,41 @@ import{
     FormMessage,
 }from "@/components/ui/form";
 import { fa } from "zod/v4/locales";
+import { on } from "events";
 
 const formSchema = z.object({
+    name: z.string().min(1, {message: "Name is required"}),
     email: z.string().email(),
-    password: z.string().min(1, {message: "Password is required"}).min(8, {message: "Password must be at least 8 characters"}),
- });
+    password: z.string().min(1, {message: "Password is required"}),
+    ConfirmPassword: z.string().min(1, {message: "Confirm Password is required"}),
+ })
+.refine((data) => data.password === data.ConfirmPassword, {
+    message: "Passwords do not match",
+    path: ["ConfirmPassword"],
+});
 
-export const SignInViews = () => {
+export const SignUpViews = () => {
   const router = useRouter();
-  const [error, setError] = useState<string | null> (null);
+  const [error, setError] = useState<string | null > (null);
   const [pending, setPending] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: "",
       email: "",
       password: "",
+      ConfirmPassword: "",
     },
   });
 
   const onSubmit = (data: z.infer<typeof formSchema>) => {
     setError(null);
     setPending(true);
-  authClient.signIn.email(
+
+  authClient.signUp.email(
     {
+      name: data.name,
       email: data.email,
       password: data.password,
       callbackURL:"/",
@@ -70,7 +81,8 @@ const onSocial = (provider: "github" | "google") => {
   authClient.signIn.social(
     {
       provider: provider,
-      callbackURL:"/"
+      callbackURL:"/",
+
     },
     {
       onSuccess: () => {
@@ -95,12 +107,32 @@ const onSocial = (provider: "github" | "google") => {
               <div className="flex flex-col gap-6"> 
                 <div className="flex flex-col items-center text-center">
                   <h1 className="text-2xl font-bold">
-                     Welcome Back
+                     Let&apos;s get started
                   </h1>
                   <p className="text-muted-foreground text-balance">
-                     Login to your account 
+                     Create your account
                   </p>
                   </div>
+                  <div className="grid gap-3">
+                    <FormField
+                      control={form.control}
+                      name="name"
+                      render={({field}) => (
+                        <FormItem>
+                          <FormLabel>Name</FormLabel>
+                          <FormControl> 
+                            <Input
+                            type="text"
+                            placeholder="Your Name"
+                            {...field}
+                            />
+                          </FormControl>
+                          <FormMessage/>
+                        </FormItem>
+                       )}
+                    />    
+                    </div>              
+                </div>
                   <div className="grid gap-3">
                     <FormField
                       control={form.control}
@@ -139,6 +171,24 @@ const onSocial = (provider: "github" | "google") => {
                        )}
                     />                  
                   </div>
+                   <div className="grid gap-3">
+                    <FormField
+                      control={form.control}
+                      name="ConfirmPassword"
+                      render={({field}) => (
+                        <FormItem>
+                          <FormLabel>Confirm Password</FormLabel>
+                          <FormControl> 
+                            <Input
+                            type="password"
+                            placeholder="********"
+                            {...field}
+                            />
+                          </FormControl>
+                          <FormMessage/>
+                        </FormItem>
+                       )}
+                    />            
                   {!!error && (
                     <Alert className="bg-destructive/10 border-none">
                       <OctagonAlertIcon className="h-4 w-4 !text-destructive" />
@@ -164,11 +214,11 @@ const onSocial = (provider: "github" | "google") => {
                  type="button"
                  className="w-full"
                 >
-                  <FaGoogle /> 
+                  <FaGoogle />
                 </Button>
                 <Button
+                 onClick={ () => onSocial("github") }
                  disabled={pending}
-                onClick={ () => onSocial("github") }
                  variant="outline"
                  type="button"
                  className="w-full"
@@ -177,9 +227,9 @@ const onSocial = (provider: "github" | "google") => {
                 </Button>
                </div>
                <div className="text-center text-sm">
-                Don&apos;t have an account?{" "} 
-                <Link href="/sign-up" className="underline underline-offset-4">
-                  Sign Up
+                  Already have an account?{" "} 
+                <Link href="/sign-in" className="underline underline-offset-4">
+                     Sign In
                 </Link>
                 </div>
               </div>
@@ -190,8 +240,8 @@ const onSocial = (provider: "github" | "google") => {
             <Image 
               src="/logo.png" 
               alt="logo" 
-              width={92}   
-              height={92}
+              width={92} 
+              height={92} 
               className="h-[92px] w-[92px]"
             />
             <p className="text-2xl font-semibold text-white">
