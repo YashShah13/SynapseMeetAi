@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { GeneratedAvatar } from "@/components/ui/generated-avatar";
 import { authClient } from "@/lib/auth-client";
 import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -20,10 +21,9 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-}from "@/components/ui/drawer";
+} from "@/components/ui/drawer";
 
 
-import { GeneratedAvatar } from "@/components/ui/generated-avatar";
 import {
   ChevronDownIcon,
   CreditCardIcon,
@@ -31,10 +31,9 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-
 export const DashboardUserButton = () => {
   const router = useRouter();
-  const isMobile =useIsMobile();
+  const isMobile = useIsMobile();
   const { data, isPending } = authClient.useSession();
 
   const onLogout = () => {
@@ -51,13 +50,13 @@ export const DashboardUserButton = () => {
     return null;
   }
 
-  if (isMobile){
-    return(
-      <Drawer>
-        <DrawerTrigger className="group rounded-xl border border-white/10 p-3 w-full flex items-center justify-between 
+ if(isMobile){
+   return(
+<Drawer>
+  <DrawerTrigger className="group rounded-xl border border-white/10 p-3 w-full flex items-center justify-between 
                    bg-white/5 hover:bg-gradient-to-r hover:from-cyan-500/20 hover:to-purple-500/20 
-                   shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-lg gap-x-0">
-         {data.user.image ? (
+                   shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-lg">
+           {data.user.image ? (
           <Avatar className="ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition">
             <AvatarImage src={data.user.image} />
           </Avatar>
@@ -65,8 +64,7 @@ export const DashboardUserButton = () => {
           <GeneratedAvatar
             seed={data.user.name}
             variant="initials"
-            className="size-9 mr-3 rounded-full ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition"
-          />
+            className="size-9 mr-3 rounded-full ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition" />
         )}
         <div className="flex flex-col gap-0.5 text-left overflow-hidden flex-1 min-w-0">
           <p className="text-sm truncate w-full font-medium bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
@@ -77,31 +75,30 @@ export const DashboardUserButton = () => {
           </p>
         </div>
         <ChevronDownIcon className="size-4 shrink-0 text-gray-400 group-hover:text-cyan-400 transition" />
-        </DrawerTrigger>
-        <DrawerContent>
-          <DrawerHeader>
-            <DrawerTitle> {data.user.name} </DrawerTitle>
-            <DrawerDescription>{data.user.email}</DrawerDescription>
-          </DrawerHeader>
-          <DrawerFooter>
-          <Button
-           variant="outline"
-           onClick={() => {}}>
-            <CreditCardIcon className="size-4 text-cyan-400 group-hover:text-purple-400 transition" />
-               Billing
-          </Button>
-          <Button
-           variant="outline"
-           onClick={onLogout}>
-            <LogOutIcon className="size-4 text-red-400 group-hover:text-red-300 transition" />
-               LogOut
-          </Button>
-
-          </DrawerFooter>
-        </DrawerContent>
-      </Drawer>
-    )
-  }
+  </DrawerTrigger>
+   <DrawerContent>
+    <DrawerHeader>
+      <DrawerTitle>{data.user.name}</DrawerTitle>
+      <DrawerDescription> {data.user.email}</DrawerDescription>
+    </DrawerHeader>
+    <DrawerFooter>
+      <Button
+      variant="outline"
+      onClick={() => {}}>
+        <CreditCardIcon className="size-4 text-cyan-400 group-hover:text-purple-400 transition" />
+        Billing
+      </Button>
+      <Button
+      variant="outline"
+      onClick={onLogout}>
+        <LogOutIcon className="size-4 text-red-400 group-hover:text-red-300 transition" />
+        LogOut
+      </Button>
+    </DrawerFooter>
+   </DrawerContent>
+</Drawer>
+   )
+ }
 
   return (
     <DropdownMenu>
@@ -109,7 +106,7 @@ export const DashboardUserButton = () => {
       <DropdownMenuTrigger
         className="group rounded-xl border border-white/10 p-3 w-full flex items-center justify-between 
                    bg-white/5 hover:bg-gradient-to-r hover:from-cyan-500/20 hover:to-purple-500/20 
-                   shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-lg gap-x-0" >
+                   shadow-md hover:shadow-lg transition-all duration-300 backdrop-blur-lg">
         {data.user.image ? (
           <Avatar className="ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition">
             <AvatarImage src={data.user.image} />
@@ -118,10 +115,8 @@ export const DashboardUserButton = () => {
           <GeneratedAvatar
             seed={data.user.name}
             variant="initials"
-            className="size-9 mr-3 rounded-full ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition"
-          />
+            className="size-9 mr-3 rounded-full ring-2 ring-cyan-400/50 group-hover:ring-purple-400/50 transition" />
         )}
-
         <div className="flex flex-col gap-0.5 text-left overflow-hidden flex-1 min-w-0">
           <p className="text-sm truncate w-full font-medium bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">
             {data.user.name}
@@ -170,7 +165,7 @@ export const DashboardUserButton = () => {
           className="cursor-pointer flex items-center justify-between rounded-md px-3 py-2 
                      hover:bg-gradient-to-r hover:from-red-500/20 hover:to-red-600/20 
                      text-red-400 hover:text-red-300 transition">
-          Logout
+         Logout
           <LogOutIcon className="size-4 text-red-400 group-hover:text-red-300 transition" />
         </DropdownMenuItem>
       </DropdownMenuContent>
