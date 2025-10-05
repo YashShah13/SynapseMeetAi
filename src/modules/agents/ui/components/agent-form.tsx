@@ -59,7 +59,7 @@ export const AgentForm = ({
        resolver: zodResolver(agentsInsertSchema),
         defaultValues: {
             name: initialValues?.name ?? "",
-            instructions: initialValues?.instructions ?? "",
+            instructions: initialValues?.instruction ?? "",
         },
     });
 
@@ -68,7 +68,7 @@ export const AgentForm = ({
 
     const onSubmit = (values: z.infer<typeof agentsInsertSchema>) => {
         if (isEdit) {
-            console.log ("TODO: updataAgent")
+            console.log ("TODO: updateAgent")
         }else{
             createAgent.mutate(values);
         }
