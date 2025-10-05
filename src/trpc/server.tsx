@@ -12,3 +12,5 @@ export const trpc = createTRPCOptionsProxy({
   router: appRouter,
   queryClient: getQueryClient,
 });
+
+export type { inferRouterOutputs, inferRouterInputs } from '@trpc/server';
