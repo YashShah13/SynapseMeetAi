@@ -5,7 +5,7 @@ import { PlusIcon, XCircle } from "lucide-react";
 import { NewAgentDialog } from "./new-agent-dialog";
 import { useState } from "react";
 import { useAgentsFilters } from "../../hooks/use-agents-filters";
-import { AgentsSearchFilter} from "./agent-seaarch-filter";
+import { AgentsSearchFilter} from "./agent-search-filter";
 import { DEFAULT_PAGE } from "@/constants";
 
 export const AgentsListHeader = () => {
