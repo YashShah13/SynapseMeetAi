@@ -10,8 +10,8 @@ export const MeetingView = () => {
     const {data} =useSuspenseQuery (trpc.meetings.getMany.queryOptions({}));
 
   return (
-   <div>
-     {JSON.stringify(data)}
+   <div className="overflow-x-scroll">
+    {/*JSON.stringify(data)*/}
     </div>
     );
 };
@@ -30,7 +30,7 @@ return (
 export const MeetingsViewError = () => {
      return(
         <ErrorState
-               title= "Error Loading Agents"
+               title= "Error Loading Meetings"
                description="Something Went Wrong"
         />
      );
