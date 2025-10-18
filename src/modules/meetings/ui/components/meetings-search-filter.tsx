@@ -15,7 +15,7 @@ export const MeetingsSearchFilter = () => {
 
       {/* Input Field */}
       <Input
-        placeholder="Search agents..."
+        placeholder="Search Meetings..."
         className="h-10 w-full pl-10 pr-4 text-sm rounded-lg border border-gray-200 bg-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
         value={filters.Search}
         onChange={(e) => setFilters({ Search: e.target.value })}
