@@ -74,13 +74,12 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     accessorKey: "status",
     header: "Status",
     cell: ({row}) => {
-      const Icon = statusIconMap[row.original.status as keyof typeof statusIconMap];
-
+      const Icon = statusIconMap[row.original.status as keyof typeof statusIconMap] ?? CircleXIcon;
       return (
         <Badge
         variant="outline"
         className={cn(
-          "capitalize (&svg):size-4 text-muted-foreground",
+          "capitalize [&_svg]:size-4 text-muted-foreground",
           statusColorMap[row.original.status as keyof typeof statusColorMap]
         )}
         >
@@ -100,7 +99,7 @@ export const columns: ColumnDef<MeetingGetMany[number]>[] = [
     cell: ({row}) => (
        <Badge
         variant="outline"
-        className="capitalize (&>svg):size-4 items-center gap-x-2"
+        className="capitalize [&>svg]:size-4 items-center gap-x-2"
        >
         <ClockFadingIcon className="text-blue-400"/>
         {row.original.duration ? formatDuration(row.original.duration) : "No duration"}
