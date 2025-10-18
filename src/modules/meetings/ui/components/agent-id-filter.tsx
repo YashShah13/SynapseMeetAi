@@ -4,7 +4,7 @@ import { useTRPC } from "@/trpc/client";
 import { CommandSelect } from "@/components/command-select";
 import { GeneratedAvatar } from "@/components/ui/generated-avatar";
 import { useMeetingsFilters } from "../../hooks/use-meetings-filters";
-import { onSet } from "better-auth/react";
+
 
 export const AgentIdFilter = () => {
     const [filters,setFilters] = useMeetingsFilters();

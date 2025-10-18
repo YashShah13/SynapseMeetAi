@@ -2,7 +2,7 @@ import {parseAsInteger, parseAsString, useQueryStates, parseAsStringEnum} from "
 
 import { DEFAULT_PAGE } from "@/constants";
 import { MeetingStatus } from "../types";
-import { object } from "zod";
+
 
 
 export const useMeetingsFilters = () => {
