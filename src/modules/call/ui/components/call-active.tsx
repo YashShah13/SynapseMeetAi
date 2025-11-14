@@ -1,14 +1,20 @@
 import Link from "next/link";
 import Image from "next/image";
-import {
-    CallControls,
-    SpeakerLayout
-} from "@stream-io/video-react-sdk";
+import dynamic from "next/dynamic";
+import { CallControls } from "@stream-io/video-react-sdk";
+
+const SpeakerLayout = dynamic(
+  () =>
+    import("@stream-io/video-react-sdk").then(
+      (mod) => mod.SpeakerLayout
+    ),
+  { ssr: false }
+);
 
 interface Props {
     onLeave: ()=> void;
     meetingName: string;
-};
+}
 
 export const CallActive = ({onLeave, meetingName}: Props) => {
     return(
@@ -21,7 +27,10 @@ export const CallActive = ({onLeave, meetingName}: Props) => {
                 {meetingName}
              </h4>
             </div>
+
+           {/* FIXES INFINITE LOOP */}
            <SpeakerLayout />
+
            <div className="bg-[#101213] rounded-full px-4">
             <CallControls onLeave={onLeave} />
            </div>
